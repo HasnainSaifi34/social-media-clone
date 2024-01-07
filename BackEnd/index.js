@@ -1,17 +1,17 @@
 
 const {ApolloServer}=require('@apollo/server');
+const {gql}=require('@apollo/server');
 const {expressMiddleware} = require('@apollo/server/express4')
 const port = 3050;
 const cors = require('cors')
 require('dotenv').config();
 const pool = require('./model/pool.js');
-
+const typeDefs = require('./model/typeDefs.js');
 const StartServer = async ()=>{
     const express = require('express');
     const server = express();
     const apolloServer = new ApolloServer({
-        typeDefs:{},
-        resolvers:{}
+        typeDefs
     
     })
     await apolloServer.start();
