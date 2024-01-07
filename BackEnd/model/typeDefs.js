@@ -13,6 +13,7 @@ const typeDefs = `
     age: Int
     publicaccount:Boolean
     isonline:Boolean
+    email:String!
   }
 
   type Query {
@@ -30,7 +31,8 @@ const typeDefs = `
     password: String
     profilepicture: String 
     age: Int
-    
+    email:String!
+
     ): User
   }
 `;

@@ -26,14 +26,15 @@ const createUser = async (args) => {
     phoneno,
     password,
     profilepicture,
-    age
+    age,
+    email
   } = args;
   const data = {
     UserName: username,
     FirstName: firstname,
     LastName: lastname,
     PhoneNo: phoneno,
-
+    email:email,
     PassWord: password,
     ProfilePicture: profilepicture,
     Age: age,
@@ -45,7 +46,7 @@ const createUser = async (args) => {
   const hasshedpass = await bcrypt.hash(password ,10);
 
   const query =
-    "INSERT INTO userAuth (UserName, FirstName, LastName, PhoneNo, jwtToken, PassWord, ProfilePicture, Age) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *";
+    "INSERT INTO userAuth (UserName, FirstName, LastName, PhoneNo, jwtToken, PassWord, ProfilePicture, Age, email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9) RETURNING *";
 
   const values = [
     username,
@@ -55,7 +56,8 @@ const createUser = async (args) => {
     jwttoken,
     hasshedpass,
     profilepicture,
-    age
+    age,
+    email
   ];
 
   const result = await pool.query(query, values);
