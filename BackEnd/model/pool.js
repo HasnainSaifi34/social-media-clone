@@ -1,6 +1,6 @@
 const { Pool } = require('pg');
 require('dotenv').config();
-const pool1 = new Pool({
+const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'socialmedia',
@@ -10,7 +10,7 @@ const pool1 = new Pool({
 
 
 module.exports = {
-    pool1,
+    pool,
     
   };
 
