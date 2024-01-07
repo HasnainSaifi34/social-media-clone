@@ -12,7 +12,7 @@ const StartServer = async ()=>{
     const express = require('express');
     const server = express();
     const apolloServer = new ApolloServer({
-       typeDefs,
+       typeDefs:`${typeDefs.typeDefs}`,
        resolvers
     
     })
@@ -31,4 +31,4 @@ const StartServer = async ()=>{
 }
 StartServer();
 
-
+console.log(typeDefs.typeDefs)
