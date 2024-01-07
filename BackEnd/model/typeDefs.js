@@ -9,8 +9,10 @@ const typeDefs = `
     PhoneNo: String
     jwtToken: String
     PassWord: String
-    ProfilePicture: String # Assuming you store the picture path or URL as a string
+    ProfilePicture: String 
     Age: Int
+    publicAccount:Boolean
+    isOnline:Boolean
   }
 
   type Query {
@@ -28,6 +30,8 @@ const typeDefs = `
       PassWord: String
       ProfilePicture: String
       Age: Int
+      publicAccount:Boolean
+      isOnline:Boolean
     ): User
   }
 `;
