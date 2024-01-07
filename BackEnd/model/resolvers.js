@@ -11,6 +11,7 @@ const getUserById = async (UserId) => {
   const getAllUsers = async () => {
     const query = 'SELECT * FROM userAuth';
     const result = await pool.query(query);
+    console.log('Result:', result.rows);
     return result.rows;
   };
   
@@ -37,8 +38,16 @@ const getUserById = async (UserId) => {
   };
   const resolvers = {
     Query: {
-      getUserById: (_, { UserId }) => getUserById(UserId),
-      getUsers: () => getAllUsers(),
+      getUserById:(_, { UserId }) => getUserById(UserId),
+      getUsers:  async () => {
+        try {
+          const users = await getAllUsers();
+          return users;
+        } catch (error) {
+          console.error(error);
+          throw new Error('Failed to fetch users');
+        }
+      },
     },
     Mutation: {
       createUser: (_, args) => createUser(args),
