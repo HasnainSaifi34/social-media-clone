@@ -31,4 +31,3 @@ const StartServer = async ()=>{
 }
 StartServer();
 
-console.log(typeDefs.typeDefs)

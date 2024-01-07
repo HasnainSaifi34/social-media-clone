@@ -2,15 +2,17 @@ const { gql } = require('apollo-server');
 
 const typeDefs = `
   type User {
-    UserId: ID!
-    UserName: String!
-    FirstName: String!
-    LastName: String!
-    PhoneNo: String
-    jwtToken: String
-    PassWord: String
-    ProfilePicture: String # Assuming you store the picture path or URL as a string
-    Age: Int
+    userid: ID!
+    username: String!
+    firstname: String!
+    lastname: String!
+    phoneno: String
+    jwttoken: String
+    password: String
+    profilepicture: String 
+    age: Int
+    publicaccount:Boolean
+    isonline:Boolean
   }
 
   type Query {
@@ -20,14 +22,17 @@ const typeDefs = `
 
   type Mutation {
     createUser(
-      UserName: String!
-      FirstName: String!
-      LastName: String!
-      PhoneNo: String
-      jwtToken: String
-      PassWord: String
-      ProfilePicture: String
-      Age: Int
+      userid: ID!
+    username: String!
+    firstname: String!
+    lastname: String!
+    phoneno: String
+    jwttoken: String
+    password: String
+    profilepicture: String 
+    age: Int
+    publicaccount:Boolean
+    isonline:Boolean
     ): User
   }
 `;
