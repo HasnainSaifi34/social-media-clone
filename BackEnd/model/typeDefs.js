@@ -22,17 +22,15 @@ const typeDefs = `
 
   type Mutation {
     createUser(
-      userid: ID!
     username: String!
     firstname: String!
     lastname: String!
     phoneno: String
-    jwttoken: String
+    
     password: String
     profilepicture: String 
     age: Int
-    publicaccount:Boolean
-    isonline:Boolean
+    
     ): User
   }
 `;

@@ -20,42 +20,42 @@ const getAllUsers = async () => {
 // Function to create a new user
 const createUser = async (args) => {
   const {
-    UserName,
-    FirstName,
-    LastName,
-    PhoneNo,
-    PassWord,
-    ProfilePicture,
-    Age,
+    username,
+    firstname,
+    lastname,
+    phoneno,
+    password,
+    profilepicture,
+    age
   } = args;
   const data = {
-    UserName: UserName,
-    FirstName: FirstName,
-    LastName: LastName,
-    PhoneNo: PhoneNo,
+    UserName: username,
+    FirstName: firstname,
+    LastName: lastname,
+    PhoneNo: phoneno,
 
-    PassWord: PassWord,
-    ProfilePicture: ProfilePicture,
-    Age: Age,
+    PassWord: password,
+    ProfilePicture: profilepicture,
+    Age: age,
   };
   const options = {
     expiresIn: "7d",
   };
   const jwttoken = jwt.sign(data, secretKey, options);
-  const hasshedpass = bcrypt.hash(10, PassWord);
+  const hasshedpass = await bcrypt.hash(password ,10);
 
   const query =
     "INSERT INTO userAuth (UserName, FirstName, LastName, PhoneNo, jwtToken, PassWord, ProfilePicture, Age) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *";
 
   const values = [
-    UserName,
-    FirstName,
-    LastName,
-    PhoneNo,
-    jwtToken,
+    username,
+    firstname,
+    lastname,
+    phoneno,
+    jwttoken,
     hasshedpass,
-    ProfilePicture,
-    Age,
+    profilepicture,
+    age
   ];
 
   const result = await pool.query(query, values);
