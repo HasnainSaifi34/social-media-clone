@@ -8,6 +8,7 @@
     "start": "nodemon index.js"
   },
   "dependencies": {
+    "@apollo/server": "^4.10.0",
     "apollo-server": "^3.13.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
