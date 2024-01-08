@@ -16,6 +16,11 @@ const typeDefs = `
     email:String!
   }
 
+  type AuthStatus {
+    status:Boolean!
+    message:String!
+    jwttoken:String
+  }
   type Query {
     getUserById(UserId: ID!): User
     getUsers:[User]
@@ -38,7 +43,8 @@ const typeDefs = `
     login(
       username:String!
       password:String!
-    ):User
+
+    ):AuthStatus  
   }
 `;
 module.exports={
