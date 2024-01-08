@@ -17,7 +17,8 @@ const { getUserById,
     },
     Mutation: {
       createUser: (_, args) => createUser(args),
-      login: (_,{username , password})=>  Authentication(username , password)
+      login: async (_,{username , password})=>  Authentication(username, password)
+
 
     },
   };

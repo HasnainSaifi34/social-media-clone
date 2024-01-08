@@ -24,7 +24,6 @@ const typeDefs = `
   type Query {
     getUserById(UserId: ID!): User
     getUsers:[User]
-    login:User
   }
 
   type Mutation {
@@ -43,7 +42,7 @@ const typeDefs = `
     login(
       username:String!
       password:String!
-
+    
     ):AuthStatus  
   }
 `;

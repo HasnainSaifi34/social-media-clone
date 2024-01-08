@@ -108,7 +108,6 @@ const Authentication = async (username, password) => {
       };
 
       const newJWToken = jwt.sign(JWTdata, secretKey, options);
-
       try {
         const updateQuery = `
           UPDATE userAuth
@@ -120,8 +119,7 @@ const Authentication = async (username, password) => {
         const updateValues = [newJWToken, username];
         const updateResult = await pool.query(updateQuery, updateValues);
 
-
-        return { status: true, message: "Password is correct" ,jwttoken:newJWToken};
+        return { "status": true, "message": "Password is correct" ,"jwttoken":newJWToken.toString()};
 
       } catch (e) {
         console.error("Internal server error:", e);
