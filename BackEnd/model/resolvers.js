@@ -1,6 +1,6 @@
 const { getUserById,
   getAllUsers,
-  createUser,} =require('../controller/userResolver');
+  createUser,Authentication} =require('../controller/userResolver');
   const resolvers = {
     Query: {
       getUserById:(_, { UserId }) => getUserById(UserId),
@@ -12,10 +12,13 @@ const { getUserById,
           console.error(error);
           throw new Error('Failed to fetch users');
         }
-      },
+      }
+      
     },
     Mutation: {
       createUser: (_, args) => createUser(args),
+      login: (_,{username , password})=>  Authentication(username , password)
+
     },
   };
   

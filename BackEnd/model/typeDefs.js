@@ -19,6 +19,7 @@ const typeDefs = `
   type Query {
     getUserById(UserId: ID!): User
     getUsers:[User]
+    login:User
   }
 
   type Mutation {
@@ -34,6 +35,10 @@ const typeDefs = `
     email:String!
 
     ): User
+    login(
+      username:String!
+      password:String!
+    ):User
   }
 `;
 module.exports={

@@ -5,3 +5,6 @@
 /.env
 #lock json file
 ./package-lock.json
+
+
+/notes.md

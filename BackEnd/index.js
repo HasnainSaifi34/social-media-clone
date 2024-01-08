@@ -29,5 +29,5 @@ const StartServer = async ()=>{
     
     server.get('/user', async(req,res)=>{res.send("you are a user")})
 }
-StartServer();
+StartServer().catch((e)=>console.log(e));
 
