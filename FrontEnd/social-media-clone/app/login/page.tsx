@@ -1,9 +1,17 @@
 "use client"
 import { NextPage } from "next";
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, DocumentNode, TypedDocumentNode } from '@apollo/client';
 import { useEffect, useState } from "react";
 
-const getUsers = gql`
+type getUsersType ={
+  firstname:string,
+  lastname:string,
+  age:number,
+  password:string,
+  jwttoken:string
+ }
+
+const getUsers:(DocumentNode | TypedDocumentNode <{getUsers:getUsersType[]}>) = gql`
   query GetUsers {
     getUsers {
       firstname
@@ -17,13 +25,13 @@ const getUsers = gql`
 `;
 
 const login: NextPage = () => {
-  const { loading, error, data } = useQuery(getUsers);
+  const { loading, error, data } = useQuery<{getUsers:getUsersType[]}>(getUsers);
 
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<getUsersType[] | null >(null);
 
   useEffect(() => {
     if (!loading && data) {
-      setUserData(data);
+      setUserData(data); 
       console.log(data);
     }
   }, [loading, data]);
