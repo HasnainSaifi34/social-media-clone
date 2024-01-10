@@ -1,6 +1,10 @@
-import React from 'react';
-
-const LoginForm = () => {
+import React, { Dispatch, SetStateAction } from 'react';
+import { authStatType } from '../(types)/types';
+interface LoginCardProps {
+    setAuthStatus: Dispatch<SetStateAction<authStatType | {}>>;
+    SetNewUser: Dispatch<SetStateAction<boolean>>;
+  }
+const LoginForm:React.FC<LoginCardProps>  = ({setAuthStatus , SetNewUser}) => {
     return (
         <div className="bg-gray-100 flex items-center justify-center h-screen">
             <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md">
