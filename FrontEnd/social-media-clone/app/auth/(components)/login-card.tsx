@@ -1,9 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { authStatType } from '../(types)/types';
-interface LoginCardProps {
-    setAuthStatus: Dispatch<SetStateAction<authStatType | {}>>;
-    SetNewUser: Dispatch<SetStateAction<boolean>>;
-  }
+import { LoginCardProps } from '../(types)/types';
 const LoginForm:React.FC<LoginCardProps>  = ({setAuthStatus , SetNewUser}) => {
     return (
         <div className="bg-gray-100 flex items-center justify-center h-screen">
