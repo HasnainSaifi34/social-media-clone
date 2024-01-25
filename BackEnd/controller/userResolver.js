@@ -31,6 +31,7 @@ const createUser = async (args) => {
     age,
     email,
   } = args;
+  console.log(args)
   const hasshedpass = await bcrypt.hash(password, 10);
 
   const data = {
