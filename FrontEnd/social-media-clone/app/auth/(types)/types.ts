@@ -15,10 +15,8 @@ export interface RegisterTypes{
   username: string,
   firstname: string,
   lastname:string,
-    phoneno: number |null,
   password: string,
-  profilepicture: Buffer | null,
-  age: number | null,
+  age: string | number,
   email: string,
 }
 // export interface UserQueryObj {

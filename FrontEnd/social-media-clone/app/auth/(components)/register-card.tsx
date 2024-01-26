@@ -23,10 +23,8 @@ const Register: React.FC<RegisterComponentProps> = () => {
     username: "",
     firstname: "",
     lastname: "",
-    phoneno: null,
     password: "",
-    profilepicture: null,
-    age: null,
+    age: '',
     email: "",
   });
   const handleContextMenu = (e: React.MouseEvent<HTMLInputElement>) => {
@@ -39,30 +37,30 @@ const Register: React.FC<RegisterComponentProps> = () => {
         e.target.name === "age" ? parseInt(e.target.value, 10) : e.target.value,
     });
   };
-  const handleProfilePictureChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    const reader = new FileReader();
+  // const handleProfilePictureChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   const reader = new FileReader();
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const dataUrl = e.target?.result as string;
-        setImageUrl(dataUrl);
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => {
+  //       const dataUrl = e.target?.result as string;
+  //       setImageUrl(dataUrl);
 
-        const base64 = dataUrl.split(",")[1];
-        const buffer = Buffer.from(base64, "base64");
+  //       const base64 = dataUrl.split(",")[1];
+  //       const buffer = Buffer.from(base64, "base64");
 
-        console.log("Image Buffer:", buffer);
-        if (buffer!==null || undefined) {
-          setFormData({
-            ...formData,
-            profilepicture: buffer || null,
-          });
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  //       console.log("Image Buffer:", buffer);
+  //       if (buffer!==null || undefined) {
+  //         setFormData({
+  //           ...formData,
+  //           profilepicture: base64 || null,
+  //         });
+  //       }
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -71,9 +69,8 @@ const Register: React.FC<RegisterComponentProps> = () => {
       username,
       firstname,
       lastname,
-      phoneno,
+      
       password,
-      profilepicture,
       age,
       email,
     } = formData;
@@ -83,9 +80,8 @@ const Register: React.FC<RegisterComponentProps> = () => {
           username,
           firstname,
           lastname,
-          phoneno,
+         
           password,
-          profilepicture,
           age,
           email,
         },
@@ -95,8 +91,6 @@ const Register: React.FC<RegisterComponentProps> = () => {
     } catch (error) {
       console.error("Error creating user:", error);
     }
-
-    console.log("Form submitted:", formData);
   };
 
   return (
@@ -114,20 +108,7 @@ const Register: React.FC<RegisterComponentProps> = () => {
           <h1 className="text-2xl font-semibold mb-6 text-gray-800">
             Register
           </h1>
-          {formData.profilepicture && (
-            <img
-              // src={URL.createObjectURL(imageUrl)}
-              alt="Profile Preview"
-              className="mt-2 rounded-md shadow-md"
-              style={{
-                width: "80px",
-                height: "80px",
-                objectFit: "cover",
-                border: "10px",
-                borderRadius: "30%",
-              }}
-            />
-          )}
+        
         </div>
         <form>
           {/* Username */}
@@ -191,24 +172,7 @@ const Register: React.FC<RegisterComponentProps> = () => {
           </div>
 
           {/* Phone Number */}
-          <div className="mb-4">
-            <label
-              htmlFor="phoneno"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Phone Number
-            </label>
-            <input
-              onContextMenu={handleContextMenu}
-              type="number"
-              id="phoneno"
-              name="phoneno"
-              value={formData.phoneno}
-              onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
-              required
-            />
-          </div>
+        
 
           {/* Password */}
           <div className="mb-4">
@@ -238,14 +202,7 @@ const Register: React.FC<RegisterComponentProps> = () => {
             >
               Profile Picture
             </label>
-            <input
-              onContextMenu={handleContextMenu}
-              type="file"
-              id="profilepicture"
-              name="profilepicture"
-              onChange={handleProfilePictureChange}
-              className="mt-1 p-2 w-full border rounded-md"
-            />
+           
             {/* Add a preview for the profile picture */}
           </div>
 
