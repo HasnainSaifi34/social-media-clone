@@ -11,7 +11,16 @@ export interface LoginCardProps {
   SetNewUser: Dispatch<SetStateAction<boolean>>;
 }
  
-
+export interface RegisterTypes{
+  username: string,
+  firstname: string,
+  lastname:string,
+    phoneno: number |null,
+  password: string,
+  profilepicture: Buffer | null,
+  age: number | null,
+  email: string,
+}
 // export interface UserQueryObj {
 //   userid: number | undefined
 //   username: string | undefined

@@ -1,6 +1,7 @@
 const { getUserById,
   getAllUsers,
-  createUser,Authentication} =require('../controller/userResolver');
+  createUser,Authentication} =  require('../controller/userResolver');
+const {GraphQLUpload} = require('graphql-upload');
   const resolvers = {
     Query: {
       getUserById:(_, { UserId }) => getUserById(UserId),
@@ -15,6 +16,7 @@ const { getUserById,
       }
       
     },
+    Upload:GraphQLUpload,
     Mutation: {
       createUser: (_, args) => createUser(args),
       login: async (_,{username , password})=>  Authentication(username, password)

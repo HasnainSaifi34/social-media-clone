@@ -10,7 +10,7 @@ scalar Upload
     phoneno: String
     jwttoken: String
     password: String
-    profilepicture: [Upload] 
+    profilepicture: Upload
     age: Int
     publicaccount:Boolean
     isonline:Boolean
@@ -35,7 +35,7 @@ scalar Upload
     phoneno: String
     
     password: String
-    profilepicture: String 
+    profilepicture: Upload
     age: Int
     email:String!
 

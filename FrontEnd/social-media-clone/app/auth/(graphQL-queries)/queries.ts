@@ -1,13 +1,14 @@
 import { gql } from "@apollo/client";
 export const createUserQuery = ()=> {
  const CREATE_USER = gql`
+ scalar Buffer
   mutation CreateUser(
     $username: String!,
     $firstname: String!,
     $lastname: String!,
     $phoneno: String,
     $password: String,
-    $profilepicture: String,
+    $profilepicture: Buffer,
     $age: Int,
     $email: String!
   ) {
