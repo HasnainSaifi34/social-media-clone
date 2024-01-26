@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const util = require("util");
+const { Buffer } = require("buffer");
 const compareAsync = util.promisify(bcrypt.compare);
 const secretKey = process.env.SECRET_TOKEN;
 // Function to get a user by ID
@@ -25,20 +26,18 @@ const createUser = async (args) => {
     username,
     firstname,
     lastname,
-    phoneno,
+
     password,
-    profilepicture,
     age,
     email,
   } = args;
-  console.log(args)
   const hasshedpass = await bcrypt.hash(password, 10);
 
   const data = {
     UserName: username,
     FirstName: firstname,
     LastName: lastname,
-    PhoneNo: phoneno,
+
     email: email,
     PassWord: hasshedpass,
     Age: age,
@@ -49,18 +48,18 @@ const createUser = async (args) => {
   const jwttoken = jwt.sign(data, secretKey, options);
 
   const query =
-    "INSERT INTO userAuth (UserName, FirstName, LastName, PhoneNo, jwtToken, PassWord, ProfilePicture, Age, email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9) RETURNING *";
+    "INSERT INTO userAuth (UserName, FirstName, LastName, PhoneNo, jwtToken, PassWord, Age, email,ProfilePicture) VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9) RETURNING *";
 
   const values = [
     username,
     firstname,
     lastname,
-    phoneno,
+     null,
     jwttoken,
     hasshedpass,
-    profilepicture,
     age,
     email,
+    null
   ];
 
   const result = await pool.query(query, values);
@@ -80,11 +79,14 @@ const Authentication = async (username, password) => {
 
     let storedHashedPassword;
     try {
-       decoded = await jwt.verify(jwttoken, secretKey);
+      decoded = await jwt.verify(jwttoken, secretKey);
       storedHashedPassword = decoded.PassWord;
     } catch (error) {
       console.error("JWT verification failed:", error.message);
-      return { status: false, message: `Verification failed: ${error.message}` };
+      return {
+        status: false,
+        message: `Verification failed: ${error.message}`,
+      };
     }
 
     const passwordMatch = await compareAsync(password, storedHashedPassword);
@@ -120,8 +122,11 @@ const Authentication = async (username, password) => {
         const updateValues = [newJWToken, username];
         const updateResult = await pool.query(updateQuery, updateValues);
 
-        return { "status": true, "message": "Password is correct" ,"jwttoken":newJWToken.toString()};
-
+        return {
+          status: true,
+          message: "Password is correct",
+          jwttoken: newJWToken.toString(),
+        };
       } catch (e) {
         console.error("Internal server error:", e);
         return { status: false, message: "Internal server error" };
@@ -135,7 +140,6 @@ const Authentication = async (username, password) => {
     return { status: false, message: "Internal server error" };
   }
 };
-
 
 module.exports = {
   getUserById,

@@ -1,16 +1,13 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = `
-scalar Upload
   type User {
     userid: ID!
     username: String!
     firstname: String!
     lastname: String!
-    phoneno: String
     jwttoken: String
     password: String
-    profilepicture: Upload
     age: Int
     publicaccount:Boolean
     isonline:Boolean
@@ -32,10 +29,7 @@ scalar Upload
     username: String!
     firstname: String!
     lastname: String!
-    phoneno: String
-    
     password: String
-    profilepicture: Upload
     age: Int
     email:String!
 

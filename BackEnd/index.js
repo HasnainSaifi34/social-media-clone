@@ -22,7 +22,7 @@ const StartServer = async ()=>{
     server.use('/graphql',expressMiddleware(apolloServer));
 
     server.listen(port,()=>{console.log("server has started ")});
-    server.get('/', async (req, res) => {
+    server.get('/uplods', async (req, res) => {
         console.log(`server is running on port ${port}`);
         res.send(`<h1>server is running<h1/>`);
     });
