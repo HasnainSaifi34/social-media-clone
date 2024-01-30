@@ -2,15 +2,15 @@ import React, { useState, ChangeEvent } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { useQuery, gql, useMutation } from "@apollo/client";
 
-import { createUserQuery } from "../(graphQL-queries)/queries";
+import { CREATE_USER } from "../(graphQL-queries)/queries";
 import { RegisterTypes } from "../(types)/types";
 export interface RegisterComponentProps {
   SetNewUser: Dispatch<SetStateAction<boolean>>;
 }
 const Register: React.FC<RegisterComponentProps> = () => {
   //  const [image , setSelectedImage] =useState<Buffer | string>('');
-  const [imageUrl, setImageUrl] = useState<string | null>("");
-  const [createUser] = useMutation(createUserQuery(), {
+  // const [imageUrl, setImageUrl] = useState<string | null>("");
+  const [createUser] = useMutation(CREATE_USER, {
     onCompleted: (data) => {
       console.log("Mutation completed:", data);
     },
@@ -75,7 +75,9 @@ const Register: React.FC<RegisterComponentProps> = () => {
       email,
     } = formData;
     try {
-      const { data } = await createUser({
+   
+    
+      let { data } = await createUser({
         variables: {
           username,
           firstname,
@@ -85,9 +87,14 @@ const Register: React.FC<RegisterComponentProps> = () => {
           age,
           email,
         },
+      
       });
-
-      console.log("User created:", data.createUser);
+      console.log("Form Data: ", formData);
+      console.log("User Created :", data)
+   
+    console.log("User created:", formData);
+    console.log(createUser);
+    console.log(CREATE_USER)
     } catch (error) {
       console.error("Error creating user:", error);
     }
