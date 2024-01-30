@@ -1,29 +1,10 @@
 import { gql } from "@apollo/client";
-export const createUserQuery = ()=> {
- const CREATE_USER = gql`
- mutation CreateUser($username: String!, $firstname: String!, $lastname: String!,  $password: String!,  $age: Int, $email:String!) {
-  createUser(
-    username: $username,
-    firstname: $firstname,
-    lastname: $lastname,
-    password: $password,
-    age: $age,
-    email:$email
-  ) {
-    status
+
+export const CREATE_USER = gql`
+  mutation CreateUser($username: String!, $firstname: String!, $lastname: String!, $email: String!, $password: String, $age: Int) {
+  createUser(username: $username, firstname: $firstname, lastname: $lastname, email: $email, password: $password, age: $age) {
     jwttoken
-    message
-    data {
-      userid
-      email
-      firstname
-      lastname
-      
-    }
+    userid
   }
 }
 `;
-return CREATE_USER;
-}
-
-
