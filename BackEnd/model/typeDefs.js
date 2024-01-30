@@ -14,6 +14,14 @@ const typeDefs = `
     email:String!
   }
 
+ type RegisterData {
+  username: String!
+  firstname: String!
+  lastname: String!
+  email:String
+  password:String
+  age: Int
+ } 
   type AuthStatus {
     status:Boolean!
     message:String!
@@ -26,14 +34,15 @@ const typeDefs = `
 
   type Mutation {
     createUser(
-    username: String!
-    firstname: String!
-    lastname: String!
-    password: String
-    age: Int
-    email:String!
-
-    ): User
+      username: String!
+      firstname: String!
+      lastname: String!
+      password: String
+      age: Int
+      email:String!
+  
+  
+    ): AuthStatus
     login(
       username:String!
       password:String!

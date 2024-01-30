@@ -22,48 +22,72 @@ const getAllUsers = async () => {
 
 // Function to create a new user
 const createUser = async (args) => {
-  const {
-    username,
-    firstname,
-    lastname,
+  const { username, firstname, lastname, password, age, email } = args;
 
-    password,
-    age,
-    email,
-  } = args;
-  const hasshedpass = await bcrypt.hash(password, 10);
+  try {
+    const saltRounds = 10;
+    if (!password) {
+      throw new Error("Password is required.");
+    }
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const data = {
+      UserName: username,
+      FirstName: firstname,
+      LastName: lastname,
+      email: email,
+      PassWord: hashedPassword,
+      Age: age,
+    };
 
-  const data = {
-    UserName: username,
-    FirstName: firstname,
-    LastName: lastname,
+    const options = {
+      expiresIn: "7d",
+    };
 
-    email: email,
-    PassWord: hasshedpass,
-    Age: age,
-  };
-  const options = {
-    expiresIn: "7d",
-  };
-  const jwttoken = jwt.sign(data, secretKey, options);
+    const jwttoken = jwt.sign(data, secretKey, options);
 
-  const query =
-    "INSERT INTO userAuth (UserName, FirstName, LastName, PhoneNo, jwtToken, PassWord, Age, email,ProfilePicture) VALUES ($1, $2, $3, $4, $5, $6, $7,$8,$9) RETURNING *";
+    const query =
+      "INSERT INTO userAuth (UserName, FirstName, LastName, PhoneNo, jwtToken, PassWord, Age, email, ProfilePicture) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *";
 
-  const values = [
-    username,
-    firstname,
-    lastname,
-     null,
-    jwttoken,
-    hasshedpass,
-    age,
-    email,
-    null
-  ];
+    const values = [
+      username,
+      firstname,
+      lastname,
+      null,
+      jwttoken,
+      hashedPassword,
+      age,
+      email,
+      null,
+    ];
 
-  const result = await pool.query(query, values);
-  return result.rows[0];
+    const result = await pool.query(query, values);
+
+    if (result.rows.length > 0) {
+      const status = {
+        status: true,
+        message: "User Created",
+        jwttoken: result.rows[0].jwttoken,
+      };
+      console.log(status);
+      return status;
+    } else {
+      const status = {
+        status: false,
+        message: "Error Creating User",
+        jwttoken: null,
+      };
+      console.log(status);
+      return status;
+    }
+  } catch (error) {
+    const status = {
+      status: false,
+      message: `Error Creating User: ${error}`,
+      jwttoken: null,
+    };
+    console.error(status);
+    return status;
+  }
 };
 
 const Authentication = async (username, password) => {

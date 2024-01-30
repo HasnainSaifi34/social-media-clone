@@ -1,6 +1,5 @@
 
 const {ApolloServer}=require('@apollo/server');
-const {gql}=require('@apollo/server');
 const {expressMiddleware} = require('@apollo/server/express4');
 const {resolvers} = require('./model/resolvers.js')
 const port = 3050;
