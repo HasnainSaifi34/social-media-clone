@@ -68,7 +68,6 @@ const Register: React.FC<RegisterComponentProps> = () => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    alert();
     const {
       username,
       firstname,
