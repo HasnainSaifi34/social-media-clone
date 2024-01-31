@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent } from "react";
 import { Dispatch, SetStateAction } from "react";
-import { useQuery, gql, useMutation } from "@apollo/client";
-
+import { useMutation } from "@apollo/client";
+import SignInWithGoogle from "./SignInGoogle";
 import { CREATE_USER } from "../(graphQL-queries)/queries";
 import { RegisterTypes } from "../(types)/types";
 export interface RegisterComponentProps {
@@ -10,6 +10,7 @@ export interface RegisterComponentProps {
 const Register: React.FC<RegisterComponentProps> = () => {
   //  const [image , setSelectedImage] =useState<Buffer | string>('');
   // const [imageUrl, setImageUrl] = useState<string | null>("");
+  const [ShowPass, SetShowPass] = useState<boolean>(false);
   const [createUser] = useMutation(CREATE_USER, {
     onCompleted: (data) => {
       console.log("Mutation completed:", data);
@@ -18,13 +19,16 @@ const Register: React.FC<RegisterComponentProps> = () => {
       console.error("Mutation error:", error);
     },
   });
+  const openEyeImg = `http://localhost:3000/eye-view-interface-symbol-svgrepo-com.svg`;
+
+  const HideEyeImg = "http://localhost:3000/eye-password-hide-svgrepo-com.svg";
 
   const [formData, setFormData] = useState<RegisterTypes>({
     username: "",
     firstname: "",
     lastname: "",
     password: "",
-    age: '',
+    age: "",
     email: "",
   });
   const handleContextMenu = (e: React.MouseEvent<HTMLInputElement>) => {
@@ -69,32 +73,29 @@ const Register: React.FC<RegisterComponentProps> = () => {
       username,
       firstname,
       lastname,
-      
+
       password,
       age,
       email,
     } = formData;
     try {
-   
-    
       let { data } = await createUser({
         variables: {
           username,
           firstname,
           lastname,
-         
+
           password,
           age,
           email,
         },
-      
       });
       console.log("Form Data: ", formData);
-      console.log("User Created :", data)
-   
-    console.log("User created:", formData);
-    console.log(createUser);
-    console.log(CREATE_USER)
+      console.log("User Created :", data);
+
+      console.log("User created:", formData);
+      console.log(createUser);
+      console.log(CREATE_USER);
     } catch (error) {
       console.error("Error creating user:", error);
     }
@@ -115,7 +116,6 @@ const Register: React.FC<RegisterComponentProps> = () => {
           <h1 className="text-2xl font-semibold mb-6 text-gray-800">
             Register
           </h1>
-        
         </div>
         <form>
           {/* Username */}
@@ -179,26 +179,37 @@ const Register: React.FC<RegisterComponentProps> = () => {
           </div>
 
           {/* Phone Number */}
-        
 
           {/* Password */}
-          <div className="mb-4">
+          <div className="mb-4 ">
             <label
               htmlFor="password"
               className="block text-sm font-medium text-gray-600"
             >
               Password
             </label>
-            <input
-              onContextMenu={handleContextMenu}
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
-              required
-            />
+            <div className="flex items-center justify-center">
+              <input
+                onContextMenu={handleContextMenu}
+                type={ShowPass ? "text" : "password"}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="mt-1 p-2 w-full border rounded-md"
+                required
+              />
+              <img
+                onClick={() => {
+                  SetShowPass(!ShowPass);
+                }}
+               src={ShowPass? openEyeImg: HideEyeImg}
+              alt="image not available"
+              style={{width:"30px",height:"30px"}}
+              >
+                
+              </img>
+            </div>
           </div>
 
           {/* Profile Picture */}
@@ -209,7 +220,7 @@ const Register: React.FC<RegisterComponentProps> = () => {
             >
               Profile Picture
             </label>
-           
+
             {/* Add a preview for the profile picture */}
           </div>
 
@@ -261,7 +272,12 @@ const Register: React.FC<RegisterComponentProps> = () => {
           >
             Register
           </button>
+          <div className="flex items-center justify-center ">
+            <br />
+            Or
+          </div>
         </form>
+        <SignInWithGoogle />
       </div>
     </div>
   );
