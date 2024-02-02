@@ -9,3 +9,15 @@ mutation CreateUser($username: String!, $firstname: String!, $lastname: String!,
   }
 }
 `;
+
+
+export const LOGIN_MUTATION = gql`
+mutation Login($username: String!, $password: String!) {
+  login(username: $username, password: $password) {
+    jwttoken
+    message
+    status
+  }
+}
+
+`;

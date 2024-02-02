@@ -7,7 +7,7 @@ import Register from "./(components)/register-card";
 const Login: NextPage = () => {
 
   const [authStatus , setAuthStatus] =useState<authStatType | {}>({});
-  const [NewUser, SetNewUser] = useState<boolean>(true)
+  const [NewUser, SetNewUser] = useState<boolean>(false)
   return  !NewUser?(
     <>
       <div className="login-wrapper bg-gray-100">

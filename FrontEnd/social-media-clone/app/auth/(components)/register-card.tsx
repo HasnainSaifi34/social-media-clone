@@ -7,16 +7,16 @@ import { RegisterTypes } from "../(types)/types";
 export interface RegisterComponentProps {
   SetNewUser: Dispatch<SetStateAction<boolean>>;
 }
-const Register: React.FC<RegisterComponentProps> = () => {
+const Register: React.FC<RegisterComponentProps> = ({ SetNewUser}) => {
   //  const [image , setSelectedImage] =useState<Buffer | string>('');
   // const [imageUrl, setImageUrl] = useState<string | null>("");
   const [ShowPass, SetShowPass] = useState<boolean>(false);
   const [createUser] = useMutation(CREATE_USER, {
     onCompleted: (data) => {
-      console.log("Mutation completed:", data);
+      console.log("Register Mutation completed:", data);
     },
     onError: (error) => {
-      console.error("Mutation error:", error);
+      console.error( " Register Mutation error:", error);
     },
   });
   const openEyeImg = `http://localhost:3000/eye-view-interface-symbol-svgrepo-com.svg`;
@@ -277,6 +277,7 @@ const Register: React.FC<RegisterComponentProps> = () => {
           </div>
         </form>
         <SignInWithGoogle />
+        Already a user ? <a onClick={()=>SetNewUser(false)} style={{textAlign:"center",cursor:"pointer",}}> Login </a>
       </div>
     </div>
   );
