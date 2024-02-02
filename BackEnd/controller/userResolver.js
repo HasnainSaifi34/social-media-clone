@@ -92,39 +92,26 @@ const createUser = async (args) => {
 
 const Authentication = async (username, password) => {
   try {
-    const userQuery = "SELECT * FROM userAuth WHERE username = $1";
+    const userQuery = "SELECT UserName, FirstName, LastName,email,Age, password FROM userAuth WHERE username = $1";
     const userResult = await pool.query(userQuery, [username]);
-    let decoded;
     if (!userResult.rows[0]) {
       return { status: false, message: "User not found" };
     }
 
-    const { jwttoken } = userResult.rows[0];
 
-    let storedHashedPassword;
-    try {
-      decoded = await jwt.verify(jwttoken, secretKey);
-      storedHashedPassword = decoded.PassWord;
-    } catch (error) {
-      console.error("JWT verification failed:", error.message);
-      return {
-        status: false,
-        message: `Verification failed: ${error.message}`,
-      };
-    }
-
+    let storedHashedPassword=userResult.rows[0].password;
     const passwordMatch = await compareAsync(password, storedHashedPassword);
 
     if (passwordMatch) {
       console.log("Password is correct");
 
-      const { UserName, FirstName, LastName, PhoneNo, email, PassWord, Age } =
-        decoded;
+      const { UserName, FirstName, LastName, email, PassWord, Age } =userResult.rows[0];
+     
       const JWTdata = {
         UserName,
         FirstName,
         LastName,
-        PhoneNo,
+       
         email,
         PassWord,
         Age,
