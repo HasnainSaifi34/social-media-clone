@@ -1,6 +1,5 @@
 "use client";
 import React, { Dispatch, SetStateAction, useState, ChangeEvent } from "react";
-import { authStatType } from "../(types)/types";
 import { LoginCardProps } from "../(types)/types";
 import { LOGIN_MUTATION } from "../(graphQL-queries)/queries";
 import { useMutation } from "@apollo/client";
@@ -16,7 +15,6 @@ const LoginForm: React.FC<LoginCardProps> = ({ setAuthStatus, SetNewUser }) => {
   const [LoginData, setLoginData] = useState<LoginData>(initialLoginData);
   const HandleChange = (e: ChangeEvent<HTMLInputElement>, type: string) => {
 
-    console.log(LoginData);
     if (type == "username") {
       setLoginData({
         username: e.target.value,
